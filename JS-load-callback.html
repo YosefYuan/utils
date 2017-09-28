@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		.item {text-align: center;}
+		.item.toggleOne .p1{display: block;background: #888;}
+		.item.toggleOne .p2{display: none;}
+		.item .p1{display: none;}
+		.item .p2{display: block;}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="item item1 toggleOne">
+			<p class="p1">111111111111</p>
+			<p class="p2">222222222222</p>
+		</div>
+		<div class="item item2">
+			<p class="p1">111111111111</p>
+			<p class="p2">222222222222</p>
+		</div>
+		<div class="item item3">
+			<p class="p1">111111111111</p>
+			<p class="p2">222222222222</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+    // js-load-callback START
+	function loadScript(src, callback) {
+	    var script = document.createElement('script'),
+	        head = document.getElementsByTagName('head')[0];
+	    script.type = 'text/javascript';
+	    script.charset = 'UTF-8';
+	    script.src = src;
+	    if (script.addEventListener) {
+	        script.addEventListener('load', function () {
+	            callback();
+	        }, false);
+	    } else if (script.attachEvent) {
+	        script.attachEvent('onreadystatechange', function () {
+	            var target = window.event.srcElement;
+	            if (target.readyState == 'loaded') {
+	                callback();
+	            }
+	        });
+	    }
+	    head.appendChild(script);
+    }
+    // js-load-callback END
+
+	function serviceFunc(){
+		var allEle = $('.wrapper .item');
+		allEle.each(function(){
+			var _this = $(this);
+			_this.on('click',function(){
+				if((_this).hasClass('toggleOne')) return;
+				allEle.removeClass('toggleOne');
+				_this.addClass('toggleOne');
+			})
+		})
+	}
+	loadScript('http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js', serviceFunc);
+</script>
+<!-- <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script> -->
+</html>
