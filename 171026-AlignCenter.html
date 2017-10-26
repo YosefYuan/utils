@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    .mask {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, .5);
+        visibility: hidden;
+    }
+
+    .imgHeight {
+        visibility: hidden;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+    }
+
+    .show {
+        visibility: visible;
+    }
+</style>
+
+<body>
+    <div class="mask"></div>
+    <div class="imgHeight">
+        <img src="01.jpg" alt="">
+    </div>
+    <a class="calLocation" href="javascript:;">計算位置</a>
+    <script>
+        function AlignCenter(clsName, maskClsName) {
+            this.clsName = clsName;
+            this.maskClsName = maskClsName;
+        }
+        AlignCenter.prototype = {
+            getLength: function () {
+                return {
+                    width: $('.' + this.clsName).width(),
+                    height: $('.' + this.clsName).height()
+                }
+            },
+            setLocation: function () {
+                var that = this;
+                var allLength = that.getLength();
+                $('.' + that.clsName).css({ 'margin-left': "-" + allLength.width / 2 + 'px', 'margin-top': "-" + allLength.height / 2 + 'px' }).addClass('show');
+            },
+            showMask: function(){
+                $('.' + this.maskClsName).addClass('show');
+            },
+            hiddenAll: function () {
+                $('.' + this.maskClsName).removeClass
+            }
+        }
+        var aligncenter = new AlignCenter('imgHeight');
+        $('.calLocation').on('click', function () {
+            aligncenter.setLocation();
+        });
+    </script>
+</body>
+
+</html>
