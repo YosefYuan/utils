@@ -26,6 +26,7 @@
   .area{width:1000px;}
   .dragable{border:1px solid red;}
   .ui-resizable-handle{background: red}
+  .btn{margin: 0 10%;}
 </style>
 
 <script type="text/javascript"></script>
@@ -45,34 +46,37 @@
   </div>
 
   <p style="text-align:center">
-    <span id="showposiclose" style="cursor:pointer;background:#ddd">colse window</span>
+  	<span class="btn" style="cursor:pointer;background:#ddd">GET</span>
+  	<span class="btn test" style="cursor:pointer;background:#ddd">PUSH</span>
+    <span class="btn" id="showposiclose" style="cursor:pointer;background:#ddd">CLOSE</span>
   </p>
 </div>
 
 
 <script type="text/javascript">
-  var len=16,aCount=[3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
-  for(var i=0;i<len;i++){
-    //add pr
-    var htmls = '<div class="pr" data-count="1"> <img src="" title="" alt=""> </div>';
-    $('.area').append(htmls);
-  }
-  
-  $('.pr').each(function(i){
-    //add src
-    
-    var count=('0'+(i+1)).slice(Math.min(-2,-(i+1).toString().length));
-    $(this).find('img:first').attr('src','C:/Users/yosyuan/Desktop/New folder (2)/s6_'+count+'.jpg');
+  $(function () {
+  	var len=16,aCount=[3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+  	for(var i=0;i<len;i++){
+  	  //add pr
+  	  var htmls = '<div class="pr" data-index="' + (i + 1) + '" data-count="' + 50 + '"> <img src="" title="" alt=""></div>';
+  	  $('.area').append(htmls);
+  	}
+  	
+  	$('.pr').each(function(i){
+  	  //add src
+  	  
+  	  var count=('0'+(i+1)).slice(Math.min(-2,-(i+1).toString().length));
+  	  $(this).find('img:first').attr('src','C:/Users/yosyuan/Desktop/test/'+count+'.jpg');
 
-    //add dragable
-    var dragCount=$(this).data('count');
-    //console.log(dragCount);
-    for(var i=0;i<dragCount;i++){
-      var html='<div class="dragable"></div>'
-      $(this).append(html);
-    }
-    
+  	  //add dragable
+  	  var dragCount=$(this).data('count');
+  	  for(var i=0;i<dragCount;i++){
+  	    var html='<div class="dragable"></div>'
+  	    $(this).append(html);
+  	  }
+  	})
   })
+
 </script>
 <script type="text/javascript" src="jqueryui/js-pc.js"></script>
 </body>
