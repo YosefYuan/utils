@@ -1,16 +1,34 @@
 $(function () {
 	$(".dragable").draggable();
-	$(".dragable").resizable();
+    $(".dragable").resizable();
+    
+    //通過圖片名字判斷是PC or MB
+    function judgeDeviceByImgName(){
+        var src = $('img:first').attr('src');
+        var judgeStr = "/m_";
+        return (src.indexOf(judgeStr) < 0) ? true : false;
+    } 
+
+    var deviceFlag = judgeDeviceByImgName();//true: 表示PC; false: 表示MB
+
+    //根據圖片適配設備 設置容器顯示樣式 
+    function showStyleByDevice(){
+        var wrapper = $('.area');
+        deviceFlag ? wrapper.addClass('PC') :wrapper.addClass('MB');
+    }
+    showStyleByDevice();
+    
 	//獲得圖片數量 
 	var allPartNum = 0,
-		allPartHeight = [];
+        allPartHeight = [];
+        
 	setTimeout(function () {
 		var num = $('img').length;
 		for (var i = 0; i < num; i++) {
 			var _height = ($('img:eq(' + i + ')').height());
 			if (_height !== 0) {
 				allPartNum++;
-				allPartHeight.push(".part" + (i + 1) + "{height:" + _height + "px}");
+				allPartHeight.push(".part" + (i + 1) + "{height:" + (_height/100).toFixed(2) + "em}");
 			} else {
 				return;
 			}
@@ -23,16 +41,29 @@ $(function () {
 		var index = $(this).parent().attr('data-index');
 		$("#showposi").css({ "left": "200px", "top": e.pageY + 50 });
 		$("#showposi").show();
-		thistop = formatNumAndPX($(this).css("top"));
-		thisleft = formatNumAndPX($(this).css("left"));
-		thisw = formatNumAndPX($(this).css("width"));
-		thish = formatNumAndPX($(this).css("height"));
-		curposiv = 'part' + index + '  top:' + thistop + ';left:' + thisleft + ';width:' + thisw + ';height:' + thish + ';';
+		var thistop = parseFloat($(this).css("top")),
+            thisleft = parseFloat($(this).css("left")),
+            thisw = parseFloat($(this).css("width")),
+            thish = parseFloat($(this).css("height"));
+
+        //-------parent w and h---------
+		var thispar_w = parseFloat($(this).parent().css("width")),
+		    thispar_h = parseFloat($(this).parent().css("height"));
+
+        //---------得到百分比------
+        var cur_w = ((thisw / thispar_w) * 100).toFixed(2),
+            cur_h = ((thish / thispar_h) * 100).toFixed(2);
+
+        var cur_top = ((thistop / thispar_h) * 100).toFixed(2),
+            cur_left = ((thisleft / thispar_w) * 100).toFixed(2);
+
+        var curposivPC = 'part' + index + '  top:' + thistop + ';left:' + thisleft + ';width:' + thisw + ';height:' + thish + ';';
+        var curposivMB = 'part' + index + '  top:' + cur_top + '%;left:' + cur_left + '%;width:' + cur_w + '%;height:' + cur_h + '%';
+        var curposiv;
+        curposiv = deviceFlag ? curposivPC : curposivMB;
 		$("#showposivalue").val(curposiv);
-		// alert(allPartHeight.join(';'));
 	});
 	$("#showposiclose").click(function () { $("#showposi").hide(); });
-
 
 	//去重函數
 	function unique(arr) {
@@ -45,8 +76,8 @@ $(function () {
 			return false;
 		}
 		return true;
-	}
-
+    }
+    
 	var styleDataArr = [];
 
 	//緩存樣式數組
@@ -87,8 +118,7 @@ $(function () {
 				unique(styleObj[arrKey[i4]]);
 			}
 		}
-		// console.dir(styleObj);
-		if (isEmptyObj(styleObj)) return;
+		// if (isEmptyObj(styleObj)) return;
 		for (var arr in styleObj) {
 			var start = '.' + arr + ' .demolink-------';
 			unique(styleObj[arr]);

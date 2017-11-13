@@ -25,9 +25,11 @@
 
 	<style>
 		.area {
-			width: 1176px;
 			margin: 0 auto;
-		}
+        }
+        .PC{width: 1176px;}
+        .MB{width: 640px;}
+        .area img{width:100%;}
 
 		.dragable {
 			border: 1px solid red;
@@ -66,10 +68,10 @@
 		</div>
 
 		<p style="text-align:center">
-			<span class="btn" id="showStyleData" style="cursor:pointer;background:#ddd">SHOW</span>
 			<span class="btn" id="showposiclose" style="cursor:pointer;background:#ddd">PUSH</span>
 		</p>
 	</div>
+	<div id="showStyleData" style="cursor:pointer;background:#29B429; text-align:center;height:50px;line-height:50px;margin-top:100px;">SHOW STYLE</div>
 	<div id="styleData"></div>
 
 
@@ -82,11 +84,12 @@
 				$('.area').append(htmls);
 			}
 
+			var src = 'D:/YosefYuan/PROJECT/Biotherm/Bio/Bio-Landing/BIO2017D11V3/images/m_';
 			$('.pr').each(function (i) {
 				//add src
 
 				var count = ('0' + (i + 1)).slice(Math.min(-2, -(i + 1).toString().length));
-				$(this).find('img:first').attr('src', 'D:/YosefYuan/PROJECT/Biotherm/Bio/Bio-Landing/BIO2017D11V3/images/' + count + '.jpg');
+				$(this).find('img:first').attr('src', src + count + '.jpg');
 
 				//add dragable
 				var dragCount = $(this).data('count');
@@ -99,7 +102,7 @@
 		})
 
 	</script>
-	<script type="text/javascript" src="jqueryui/js-pc.js"></script>
+	<script type="text/javascript" src="jqueryui/js-mb.js"></script>
 </body>
 
 </html>
