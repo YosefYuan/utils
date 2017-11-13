@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Draggable</title>
+    <link rel="stylesheet" type="text/css" href="jqueryui/index.css" />
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <script type="text/javascript" src="jqueryui/jquery164.js"></script>
+    <script type="text/javascript" src="jqueryui/ui/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="jqueryui/ui/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="jqueryui/ui/jquery.ui.mouse.js"></script>
+    <script type="text/javascript" src="jqueryui/ui/jquery.ui.draggable.js"></script>
+    <script type="text/javascript" src="jqueryui/ui/jquery.ui.resizable.js"></script>
+</head>
+
+<body>
+    <!-- img wrapper  -->
+    <div class="area"></div>
+    <!--pop part-->
+    <div id="showposi" style="position:absolute;display:none;width:430px;height:150px;background:#eee;border:1px solid #ccc;z-index: 999;">
+        <div style="padding:20px;">
+            <input id="showposivalue" type="text" size="50" value="" style="height:50px;line-height:50px;" />
+        </div>
+        <p style="text-align:center">
+            <span class="btn" id="showposiclose" style="cursor:pointer;background:#ddd">PUSH</span>
+        </p>
+    </div>
+    <!-- show style button  -->
+    <div id="showStyleData" style="cursor:pointer;background:#29B429; text-align:center;height:50px;line-height:50px;">SHOW STYLE</div>
+    <!-- 数据存储  -->
+    <div id="styleData"></div>
+</body>
+<script type="text/javascript" src="jqueryui/index.js"></script>
+
+</html>
