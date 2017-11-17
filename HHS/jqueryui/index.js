@@ -1,4 +1,5 @@
 $(function () {
+	//默认图片数量 
 	var len = 30;
 	for (var i = 0; i < len; i++) {
 		//add pr
@@ -6,7 +7,7 @@ $(function () {
 			'"> <img src="" title="" alt=""></div>';
 		$('.area').append(htmls);
 	}
-	var src = 'C:/Users/lenovo/Desktop/images/';
+	
 	$('.pr').each(function (i) {
 		//add src
 		var count = ('0' + (i + 1)).slice(Math.min(-2, -(i + 1).toString().length));
@@ -25,8 +26,8 @@ $(function () {
 	//通過圖片名字判斷是PC or MB
 	function judgeDeviceByImgName() {
 		var src = $('img:first').attr('src');
-		var judgeStr = "/m_";
-		return (src.indexOf(judgeStr) < 0) ? true : false;
+        var judgeStr = /\/m[\S]{1,3}\.(png|jpg|gif|bmp)$/gi;
+		return !src.match(judgeStr);
 	}
 
 	var deviceFlag = judgeDeviceByImgName(); //true: 表示PC; false: 表示MB
@@ -62,9 +63,7 @@ $(function () {
 		$('.removeEle').remove();
 	}, 40)
 
-	function formatNumAndPX(val) {
-		return (parseInt(val) + 'px');
-	}
+	
 	$(".dragable").dblclick(function (e) {
 		var index = $(this).parent().attr('data-index');
 		$("#showposi").css({
@@ -88,33 +87,46 @@ $(function () {
 		var cur_top = ((thistop / thispar_h) * 100).toFixed(2),
 			cur_left = ((thisleft / thispar_w) * 100).toFixed(2);
 
-		var curposivPC = 'part' + index + '  top:' + thistop + 'px;left:' + thisleft + 'px;width:' + thisw + 'px;height:' + thish + 'px;';
-		var curposivMB = 'part' + index + '  top:' + cur_top + '%;left:' + cur_left + '%;width:' + cur_w + '%;height:' + cur_h + '%;';
-		var curposiv;
+		var curposivPC = 'part' + index + '  top:' + thistop + 'px;left:' + thisleft + 'px;width:' + thisw + 'px;height:' + thish + 'px;',
+			curposivMB = 'part' + index + '  top:' + cur_top + '%;left:' + cur_left + '%;width:' + cur_w + '%;height:' + cur_h + '%;',
+			curposiv;
 		curposiv = deviceFlag ? curposivPC : curposivMB;
 		$("#showposivalue").val(curposiv);
 	});
-	$("#showposiclose").click(function () {
-		$("#showposi").hide();
-	});
+	
 
 	//去重函數
 	function unique(arr) {
 		return Array.from(new Set(arr))
 	}
 
-	//檢查對象是否為空
-	function isEmptyObj(obj) {
-		for (var i in obj) {
-			return false;
-		}
-		return true;
-	}
-
 	var styleDataArr = [];
-	$('#showposiclose').click(function () {
+	$('#pushPosiData').click(function () {
+		$("#showposi").hide();
 		var styleData = $('#showposivalue').val();
 		styleDataArr.push(styleData);
+		unique(styleDataArr);
+	})
+	$('#deleteLastStyle').click(function () {
+		$("#showposi").hide();
+		if(styleDataArr.length < 1) {
+			alert("暂无数据");
+			return;
+		};
+		var lastData = styleDataArr[styleDataArr.length - 1];
+		$('#showDelContent').val(lastData);
+		$("#showDel").show();
+		$(".mask").show();
+	})
+
+	$('#deleteAfirm').click(function () {
+		$("#showDel").hide();
+		$(".mask").hide();
+		styleDataArr.pop();
+	})
+	$('#cancelDelete').click(function () {
+		$("#showDel").hide();
+		$(".mask").hide();
 	})
 
 	$("#showStyleData").click(function () {
@@ -122,18 +134,25 @@ $(function () {
 		var twoArr = [],
 			arrKey = [],
 			arrVal = [],
-			styleObj = {};
+			styleObj = {},
+			html = allPartHeight.join("<br>") + "<br><br>";
 
-		var html = '',
-			html1 = '',
-			html2 = '';
+		// //獲取數組序列碼
+		// function getArrIndex(e){
+		// 	return parseInt(e.substring(5,e.indexOf('  ')));
+		// }
 
-		for (var i1 = 0; i1 < allPartHeight.length; i1++) {
-			html1 = allPartHeight.join("<br>") + "<br><br>"
-		}
-		var formatStyleDataArr = unique(styleDataArr);
-		for (var i2 = 0; i2 < formatStyleDataArr.length; i2++) {
-			var onestyleData = formatStyleDataArr[i2].split("  ");
+		// //排序函數
+		// function arrSort (a,b){
+		// 	// return getArrIndex(b) - getArrIndex(a);
+		// 	console.log(a);
+		// 	console.log(b);
+		// }
+		// styleDataArr.sort(arrSort.bind(null,a,b));
+		// console.dir(styleDataArr);
+
+		for (var i2 = 0; i2 < styleDataArr.length; i2++) {
+			var onestyleData = styleDataArr[i2].split("  ");
 			twoArr.push(onestyleData);
 		}
 		for (var i3 = 0; i3 < twoArr.length; i3++) {
@@ -146,18 +165,14 @@ $(function () {
 				styleObj[arrKey[i4]].push(arrVal[i4]);
 			} else {
 				styleObj[arrKey[i4]].push(arrVal[i4]);
-				// unique(styleObj[arrKey[i4]]);
 			}
 		}
-		// if (isEmptyObj(styleObj)) return;
 		for (var arr in styleObj) {
 			var start = '.' + arr + ' .link';
-			// unique(styleObj[arr]);
 			for (var i5 = 0; i5 < styleObj[arr].length; i5++) {
-				html2 += start + (i5 + 1) + "{" + styleObj[arr][i5] + "}<br>";
+				html += start + (i5 + 1) + "{" + styleObj[arr][i5] + "}<br>";
 			}
 		}
-		html = html1 + html2;
 		$('#styleData').html(html);
 	})
 });

@@ -1,84 +1,47 @@
-.area {
-    width: 85%;
-    margin: 0 auto;
-    position: relative;
-}
-
-.ui-resizable-handle {
-    width: 20px;
-    height: 20px;
-    background: red;
-    position: absolute;
-    bottom: 1px;
-    right: 1px;
-}
-
-.pr {
-    position: relative;
-}
-
-.poa {
-    position: absolute;
-}
-
-.dragable {
-    position: absolute;
-    border: 1px solid red;
-}
-
 body {
     padding: 0;
     margin: 0;
     font-family: "Verdana";
 }
 
+.area {
+    margin: 0 auto;
+    position: relative;
+}
+
 .area img {
     width: 100%;
     height: auto;
     display: block;
-}
-
-#subbg {
-    top: 100px;
-    left: 0px;
-}
-
-#sub_t_3 {
-    top: 182px;
-    left: 293px;
-    color: #8B8B8B;
-    font-size: 11px;
-}
-
-.dragable {
-    top: 20%;
-    left: 50%;
-    color: #D61D1A;
-    font-size: 40px;
-    font-weight: bold;
-    z-index: 2;
-    width: 79px;
-    height: 49px;
-}
-
-.area {
     margin: 0 auto;
 }
 
-.PC {
-    width: 1176px;
-}
-
-.MB {
-    width: 640px;
-}
-
-.area img {
-    width: 100%;
+.pr {
+    position: relative;
 }
 
 .dragable {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    color: #D61D1A;
+    /* font-size: 40px; */
+    font-weight: bold;
+    z-index: 2;
     border: 1px solid red;
+}
+
+.ui-resizable-handle {
+    width: 50px;
+    height: 50px;
+    background: red;
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+}
+
+.poa {
+    position: absolute;
 }
 
 .ui-resizable-handle {
@@ -87,6 +50,7 @@ body {
 
 .btn {
     margin: 0 10%;
+    cursor:pointer;background:#ddd;
 }
 
 #styleData {
@@ -94,4 +58,36 @@ body {
     color: #fff;
     text-align: center;
     padding: 50px 0 100px;
+}
+
+.mask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .3);
+}
+
+#showDel {
+    position: fixed;
+    width: 430px;
+    height: 150px;
+    left: 50%;
+    top: 50%;
+    margin-left: -215px;
+    margin-top: -75px;
+    background: #eee;
+    border: 1px solid #ccc;
+    z-index: 999;
+}
+#showposi{
+    position:absolute;display:none;width:430px;height:150px;background:#eee;border:1px solid #ccc;z-index: 999;
+}
+#showDelContent,
+#showposivalue{
+    height:50px;line-height:50px;
+}
+#showStyleData{
+    cursor:pointer;background:#29B429; text-align:center;height:50px;line-height:50px;
 }

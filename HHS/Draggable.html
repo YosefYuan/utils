@@ -1,5 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+<style type="text/css">
+    /* 自定义处 */
+
+    .PC .dragable {
+        width: 220px;
+        height: 80px;
+    }
+
+    .MB .dragable {
+        width: 2.5em;
+        height: 1em;
+    }
+
+    .PC {
+        width: 1176px;
+    }
+
+    .MB {
+        width: 640px;
+        font-size: 100px;
+    }
+</style>
+<script type="text/javascript">
+    //图片路径添加 并渲染 
+    var src = 'C:/Users/yosyuan/Desktop/images/m_';
+</script>
 
 <head>
     <meta charset="UTF-8">
@@ -20,19 +46,34 @@
     <!-- img wrapper  -->
     <div class="area"></div>
     <!--pop part-->
-    <div id="showposi" style="position:absolute;display:none;width:430px;height:150px;background:#eee;border:1px solid #ccc;z-index: 999;">
+    <div id="showposi">
         <div style="padding:20px;">
-            <input id="showposivalue" type="text" size="50" value="" style="height:50px;line-height:50px;" />
+            <input id="showposivalue" type="text" size="50" />
         </div>
         <p style="text-align:center">
-            <span class="btn" id="showposiclose" style="cursor:pointer;background:#ddd">PUSH</span>
+            <span class="btn" id="deleteLastStyle">DELETE</span>
+            <span class="btn" id="pushPosiData">PUSH</span>
         </p>
     </div>
+    <!-- pop delete warn -->
+    <div>
+        <div class="mask" style="display:none;"></div>
+        <div id="showDel" style="display:none;">
+            <div style="padding:20px;">
+                <input id="showDelContent" type="text" size="50" />
+            </div>
+            <p style="text-align:center">
+                <span class="btn" id="deleteAfirm">DELETE</span>
+                <span class="btn" id="cancelDelete">CANCEL</span>
+            </p>
+        </div>
+    </div>
     <!-- show style button  -->
-    <div id="showStyleData" style="cursor:pointer;background:#29B429; text-align:center;height:50px;line-height:50px;">SHOW STYLE</div>
+    <div id="showStyleData">SHOW STYLE</div>
     <!-- 数据存储  -->
     <div id="styleData"></div>
 </body>
+
 <script type="text/javascript" src="jqueryui/index.js"></script>
 
 </html>
