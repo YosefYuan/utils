@@ -1,4 +1,6 @@
 $(function () {
+	// 默认每部分排序前缀
+	var prefix = 'part';
 	//默认图片数量 
 	var len = 30;
 	for (var i = 0; i < len; i++) {
@@ -7,7 +9,7 @@ $(function () {
 			'"> <img src="" title="" alt=""></div>';
 		$('.area').append(htmls);
 	}
-	
+
 	$('.pr').each(function (i) {
 		//add src
 		var count = ('0' + (i + 1)).slice(Math.min(-2, -(i + 1).toString().length));
@@ -26,7 +28,7 @@ $(function () {
 	//通過圖片名字判斷是PC or MB
 	function judgeDeviceByImgName() {
 		var src = $('img:first').attr('src');
-        var judgeStr = /\/m[\S]{1,3}\.(png|jpg|gif|bmp)$/gi;
+		var judgeStr = /\/m[\S]{1,3}\.(png|jpg|gif|bmp)$/gi;
 		return !src.match(judgeStr);
 	}
 
@@ -50,20 +52,17 @@ $(function () {
 			if (_height !== 0) {
 				allPartNum++;
 				if (deviceFlag) {
-					allPartHeight.push(".part" + (i + 1) + "{height:" + _height + "px;}");
+					allPartHeight.push("." + prefix + (i + 1) + "{height:" + _height + "px;}");
 				} else {
-					allPartHeight.push(".part" + (i + 1) + "{height:" + (_height / 100).toFixed(2) + "em;}");
+					allPartHeight.push("." + prefix + (i + 1) + "{height:" + (_height / 100).toFixed(2) + "em;}");
 				}
 			} else {
 				$('.pr:eq(' + i + ')').addClass('removeEle');
 			}
 		}
-	}, 20);
-	setTimeout(function () {
 		$('.removeEle').remove();
-	}, 40)
+	}, 20);
 
-	
 	$(".dragable").dblclick(function (e) {
 		var index = $(this).parent().attr('data-index');
 		$("#showposi").css({
@@ -87,33 +86,34 @@ $(function () {
 		var cur_top = ((thistop / thispar_h) * 100).toFixed(2),
 			cur_left = ((thisleft / thispar_w) * 100).toFixed(2);
 
-		var curposivPC = 'part' + index + '  top:' + thistop + 'px;left:' + thisleft + 'px;width:' + thisw + 'px;height:' + thish + 'px;',
-			curposivMB = 'part' + index + '  top:' + cur_top + '%;left:' + cur_left + '%;width:' + cur_w + '%;height:' + cur_h + '%;',
+		var curposivPC = prefix + index + '  top:' + thistop + 'px;left:' + thisleft + 'px;width:' + thisw + 'px;height:' + thish + 'px;',
+			curposivMB = prefix + index + '  top:' + cur_top + '%;left:' + cur_left + '%;width:' + cur_w + '%;height:' + cur_h + '%;',
 			curposiv;
 		curposiv = deviceFlag ? curposivPC : curposivMB;
 		$("#showposivalue").val(curposiv);
 	});
-	
+
 
 	//去重函數
 	function unique(arr) {
 		return Array.from(new Set(arr))
 	}
 
-	var styleDataArr = [];
+	var styleDataArr = [],
+		uniqueStyleDataArr = [];
 	$('#pushPosiData').click(function () {
 		$("#showposi").hide();
 		var styleData = $('#showposivalue').val();
 		styleDataArr.push(styleData);
-		unique(styleDataArr);
+		uniqueStyleDataArr = unique(styleDataArr);
 	})
 	$('#deleteLastStyle').click(function () {
 		$("#showposi").hide();
-		if(styleDataArr.length < 1) {
+		if (uniqueStyleDataArr.length < 1) {
 			alert("暂无数据");
 			return;
 		};
-		var lastData = styleDataArr[styleDataArr.length - 1];
+		var lastData = uniqueStyleDataArr[uniqueStyleDataArr.length - 1];
 		$('#showDelContent').val(lastData);
 		$("#showDel").show();
 		$(".mask").show();
@@ -122,7 +122,7 @@ $(function () {
 	$('#deleteAfirm').click(function () {
 		$("#showDel").hide();
 		$(".mask").hide();
-		styleDataArr.pop();
+		uniqueStyleDataArr.pop();
 	})
 	$('#cancelDelete').click(function () {
 		$("#showDel").hide();
@@ -137,24 +137,24 @@ $(function () {
 			styleObj = {},
 			html = allPartHeight.join("<br>") + "<br><br>";
 
-		// //獲取數組序列碼
-		// function getArrIndex(e){
-		// 	return parseInt(e.substring(5,e.indexOf('  ')));
-		// }
+		//排序函數
+		function arrSort(a, b) {
+			function preGetNum(str) {
+				return parseInt(str.split(prefix).join(''));
+			}
+			var num1 = preGetNum(a[0]),
+				num2 = preGetNum(b[0]);
+			return num1 - num2;
+		}
 
-		// //排序函數
-		// function arrSort (a,b){
-		// 	// return getArrIndex(b) - getArrIndex(a);
-		// 	console.log(a);
-		// 	console.log(b);
-		// }
-		// styleDataArr.sort(arrSort.bind(null,a,b));
-		// console.dir(styleDataArr);
 
-		for (var i2 = 0; i2 < styleDataArr.length; i2++) {
-			var onestyleData = styleDataArr[i2].split("  ");
+		for (var i2 = 0; i2 < uniqueStyleDataArr.length; i2++) {
+			var onestyleData = uniqueStyleDataArr[i2].split("  ");
 			twoArr.push(onestyleData);
 		}
+		// 按照從前往後的順序排列每部分img-part
+		twoArr.sort(arrSort);
+
 		for (var i3 = 0; i3 < twoArr.length; i3++) {
 			arrKey.push(twoArr[i3][0]);
 			arrVal.push(twoArr[i3][1]);
