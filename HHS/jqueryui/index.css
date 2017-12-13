@@ -20,7 +20,6 @@ body {
     position: relative;
     outline: 10px dotted green;
 }
-
 .dragable {
     position: absolute;
     top: 10%;

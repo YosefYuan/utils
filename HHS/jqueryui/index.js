@@ -23,22 +23,12 @@ $(function() {
     $(".dragable").draggable();
     $(".dragable").resizable();
 
-    //通過圖片名字判斷是PC or MB
-    function judgeDeviceByImgName() {
-        var src = $('img:first').attr('src');
-        var judgeStr = /\/m[\S]{1,3}\.(png|jpg|gif|bmp)$/gi;
-        return !src.match(judgeStr);
-    }
-
-    var deviceFlag = judgeDeviceByImgName(); //true: 表示PC; false: 表示MB
-
     //根據圖片適配設備 設置容器顯示樣式 
     function showStyleByDevice() {
         var wrapper = $('.area');
-        deviceFlag ? wrapper.addClass('PC') : wrapper.addClass('MB');
+        (customConfig.deviceFlag === 'p') ? wrapper.addClass('PC') : wrapper.addClass('MB');
     }
     showStyleByDevice();
-
     //獲得圖片數量 
     var allPartNum = 0,
         allPartHeight = [];
@@ -49,7 +39,7 @@ $(function() {
             var _height = ($('img:eq(' + i + ')').height());
             if (_height !== 0) {
                 allPartNum++;
-                if (deviceFlag) {
+                if (customConfig.deviceFlag === 'p') {
                     allPartHeight.push("." + customConfig.partPrefix + (i + 1) + "{height:" + _height + "px;}");
                 } else {
                     allPartHeight.push("." + customConfig.partPrefix + (i + 1) + "{height:" + (_height / 100).toFixed(2) + "em;}");
@@ -87,7 +77,7 @@ $(function() {
         var curposivPC = customConfig.partPrefix + index + '  top:' + thistop + 'px;left:' + thisleft + 'px;width:' + thisw + 'px;height:' + thish + 'px;',
             curposivMB = customConfig.partPrefix + index + '  top:' + cur_top + '%;left:' + cur_left + '%;width:' + cur_w + '%;height:' + cur_h + '%;',
             curposiv;
-        curposiv = deviceFlag ? curposivPC : curposivMB;
+        curposiv = (customConfig.deviceFlag === 'p') ? curposivPC : curposivMB;
         $("#showposivalue").val(curposiv);
     });
 
