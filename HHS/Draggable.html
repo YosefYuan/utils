@@ -5,25 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Draggable</title>
-    <link rel="stylesheet" type="text/css" href="jqueryui/index.css" />
+    <link rel="stylesheet" type="text/css" href="lib/index.css" />
     <link rel="shortcut icon" href="images/favicon.ico" />
-    <script type="text/javascript" src="jqueryui/jquery164.js"></script>
-    <script type="text/javascript" src="jqueryui/ui/jquery.ui.core.js"></script>
-    <script type="text/javascript" src="jqueryui/ui/jquery.ui.widget.js"></script>
-    <script type="text/javascript" src="jqueryui/ui/jquery.ui.mouse.js"></script>
-    <script type="text/javascript" src="jqueryui/ui/jquery.ui.draggable.js"></script>
-    <script type="text/javascript" src="jqueryui/ui/jquery.ui.resizable.js"></script>
+    <script type="text/javascript" src="lib/jquery164.js"></script>
+    <script type="text/javascript" src="lib/ui/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="lib/ui/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="lib/ui/jquery.ui.mouse.js"></script>
+    <script type="text/javascript" src="lib/ui/jquery.ui.draggable.js"></script>
+    <script type="text/javascript" src="lib/ui/jquery.ui.resizable.js"></script>
 </head>
 <style type="text/css">
-/* customConfig */
 /* PC */
 .PC .dragable { width: 550px; height: 330px; }
 /* mobile */
 .MB .dragable { width: 5.6em; height: 3em; }
 
 
-.PC { width: 732px; }
-.MB { width: 640px; font-size: 100px; }
+.PC { width: 1176px; }
+.MB { width: 600px; font-size: 100px; }
 </style>
 <script type="text/javascript">
 	//图片路径、鏈接className前綴、每部分排序前缀
@@ -31,10 +30,10 @@
         imgSrcPefix: 'D:/YosefYuan/PROJECT/Shuuemura/LP_from_171030/LIPS-PC/images/shu171204_',
         linkNamePrefix: 'link',
         partPrefix: 'part',
-        deviceFlag: 'p' //p: 表示PC; 非'p': 表示MB
+        deviceFlag: '' //p: 表示PC; 非'p': 表示MB
     }
 </script>
-<script type="text/javascript" src="jqueryui/index.js"></script>
+<script type="text/javascript" src="lib/index.js"></script>
 <body>
     <!-- img wrapper  -->
     <div class="area"></div>
@@ -45,6 +44,7 @@
         </div>
         <p style="text-align:center">
             <span class="btn" id="deleteLastStyle">DELETE</span>
+            <span class="btn" id="cancelShow">CANCEL</span>
             <span class="btn" id="pushPosiData">PUSH</span>
         </p>
     </div>

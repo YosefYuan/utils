@@ -95,6 +95,9 @@ $(function() {
         styleDataArr.push(styleData);
         uniqueStyleDataArr = unique(styleDataArr);
     })
+    $('#cancelShow').click(function(){
+        $("#showposi").hide();
+    })
     $('#deleteLastStyle').click(function() {
         $("#showposi").hide();
         if (uniqueStyleDataArr.length < 1) {
