@@ -68,6 +68,12 @@ $(function() {
         });
         $("#showposi").show();
 
+        $(document).keydown(function(e){
+            if($("#showposi").is(":visible") && e.which === 13){
+                $('#pushPosiData').trigger("click");
+            };
+        })
+
         //-------parent w and h---------
         var thispar_w = parseInt($(this).parent().css("width")),
             thispar_h = parseInt($(this).parent().css("height"));
@@ -101,7 +107,8 @@ $(function() {
         var styleData = $('#showposivalue').val();
         styleDataArr.push(styleData);
         uniqueStyleDataArr = unique(styleDataArr);
-    })
+    });
+    
     $('#cancelShow').click(function(){
         $("#showposi").hide();
     })
