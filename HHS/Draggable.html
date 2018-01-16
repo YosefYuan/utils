@@ -16,30 +16,31 @@
 </head>
 <style type="text/css">
 /* PC */
-.PC .dragable { width: 550px; height: 330px; }
+.PC .dragable { width: 270px; height:360px; }
 /* mobile */
-.MB .dragable { width: 5.6em; height: 3em; }
+.MB .dragable { width: 2.20em; height: 3.00em; }
 
 
 .PC { width: 1176px; }
-.MB { width: 600px; font-size: 100px; }
+.MB { width: 640px; font-size: 100px; }
 </style>
 <script type="text/javascript">
 	//图片路径、鏈接className前綴、每部分排序前缀
-    var customConfig = {
-        imgSrcPefix: 'D:/YosefYuan/PROJECT/Shuuemura/LP_from_171030/LIPS-PC/images/shu171204_',
+    var customConfigGlobal = {
+        imgSrcPefix: 'C:/Users/yosyuan/Desktop/images1/m_',
         linkNamePrefix: 'link',
         partPrefix: 'part',
-        deviceFlag: '' //p: 表示PC; 非'p': 表示MB
+        deviceFlag: 'sfdsp', //p: 表示PC; 非'p': 表示MB
+        suffix: '.jpg'
     }
 </script>
 <script type="text/javascript" src="lib/index.js"></script>
 <body>
     <!-- img wrapper  -->
-    <div class="area"></div>
+    <div class="area">
     <!--pop part-->
     <div id="showposi">
-        <div style="padding:20px;">
+        <div style="padding:20px;padding-bottom: 0;">
             <input id="showposivalue" type="text" size="50" />
         </div>
         <p style="text-align:center">
@@ -61,6 +62,8 @@
             </p>
         </div>
     </div>
+    </div>
+    
     <!-- show style button  -->
     <div id="showStyleData">SHOW STYLE</div>
     <!-- 数据存储  -->

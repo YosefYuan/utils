@@ -18,7 +18,7 @@ body {
 
 .pr {
     position: relative;
-    outline: 10px dotted green;
+    outline: 3px dashed #f00;
 }
 .dragable {
     position: absolute;
@@ -81,6 +81,7 @@ body {
     background: #eee;
     border: 1px solid #ccc;
     z-index: 999;
+    font-size:16px;
 }
 
 #showposi {
@@ -91,6 +92,7 @@ body {
     background: #eee;
     border: 1px solid #ccc;
     z-index: 999;
+    font-size:16px;
 }
 
 #showDelContent,

@@ -1,21 +1,23 @@
 $(function() {
+    var customConfig = customConfigGlobal;
     //默认图片数量 
-    var len = 30;
+    var len = 30,
+        wrapper = $('.area');
+
     for (var i = 0; i < len; i++) {
         //add pr
-        var htmls = '<div class="pr" data-index="' + (i + 1) + '" data-count="' + 1 +
-            '"> <img src="" title="" alt=""></div>';
-        $('.area').append(htmls);
+        var htmls = `<div class="pr" data-index="${i + 1}" data-count="1"><img src="" title="" alt=""></div>`;
+        wrapper.append(htmls);
     }
 
     $('.pr').each(function(i) {
         //add src
-        var count = ('0' + (i + 1)).slice(Math.min(-2, -(i + 1).toString().length));
-        $(this).find('img:first').attr('src', customConfig.imgSrcPefix + count + '.jpg');
+        var count = (`0${i + 1}`).slice(Math.min(-2, -(i + 1).toString().length));
+        $(this).find('img:first').attr('src', `${customConfig.imgSrcPefix}${count}${customConfig.suffix}`);
         //add dragable
         var dragCount = $(this).data('count');
         for (var i = 0; i < dragCount; i++) {
-            var html = '<div class="dragable"></div>'
+            var html = `<div class="dragable"></div>`;
             $(this).append(html);
         }
     })
@@ -36,32 +38,35 @@ $(function() {
     setTimeout(function() {
         var num = $('img').length;
         for (var i = 0; i < num; i++) {
-            var _height = ($('img:eq(' + i + ')').height());
+            var _height = ($(`img:eq(${i})`).height());
             if (_height !== 0) {
                 allPartNum++;
                 if (customConfig.deviceFlag === 'p') {
-                    allPartHeight.push("." + customConfig.partPrefix + (i + 1) + "{height:" + _height + "px;}");
+                    allPartHeight.push(`.${customConfig.partPrefix}${i + 1}{height:${_height}px;}`);
                 } else {
-                    allPartHeight.push("." + customConfig.partPrefix + (i + 1) + "{height:" + (_height / 100).toFixed(2) + "em;}");
+                    allPartHeight.push(`.${customConfig.partPrefix}${i + 1}{height:${(_height / 100).toFixed(2)}em;}`);
                 }
             } else {
-                $('.pr:eq(' + i + ')').addClass('removeEle');
+                $(`.pr:eq(${i})`).addClass('removeEle');
             }
         }
         $('.removeEle').remove();
-    }, 20);
+    }, 100);
 
     $(".dragable").dblclick(function(e) {
         var index = $(this).parent().attr('data-index');
-        $("#showposi").css({
-            "left": "200px",
-            "top": e.pageY + 50
-        });
-        $("#showposi").show();
+        
         var thistop = parseInt($(this).css("top")),
             thisleft = parseInt($(this).css("left")),
             thisw = parseInt($(this).css("width")),
             thish = parseInt($(this).css("height"));
+
+        var left = thisleft-150;
+        $("#showposi").css({
+            "left": left,
+            "top": e.pageY+50
+        });
+        $("#showposi").show();
 
         //-------parent w and h---------
         var thispar_w = parseInt($(this).parent().css("width")),
@@ -74,10 +79,12 @@ $(function() {
         var cur_top = ((thistop / thispar_h) * 100).toFixed(2),
             cur_left = ((thisleft / thispar_w) * 100).toFixed(2);
 
-        var curposivPC = customConfig.partPrefix + index + '  top:' + thistop + 'px;left:' + thisleft + 'px;width:' + thisw + 'px;height:' + thish + 'px;',
-            curposivMB = customConfig.partPrefix + index + '  top:' + cur_top + '%;left:' + cur_left + '%;width:' + cur_w + '%;height:' + cur_h + '%;',
+        var curposivPC = `${customConfig.partPrefix}${index}  top:${thistop}px;left:${thisleft}px;width:${thisw}px;height:${thish}px;`,
+            curposivMB = `${customConfig.partPrefix}${index}  top:${cur_top}%;left:${cur_left}%;width:${cur_w}%;height:${cur_h}%;`,
             curposiv;
         curposiv = (customConfig.deviceFlag === 'p') ? curposivPC : curposivMB;
+        
+        
         $("#showposivalue").val(curposiv);
     });
 
@@ -144,7 +151,7 @@ $(function() {
             twoArr.push(onestyleData);
         }
         // 按照從前往後的順序排列每部分img-part
-        twoArr.sort(arrSort);
+        // twoArr.sort(arrSort);
 
         for (var i3 = 0; i3 < twoArr.length; i3++) {
             arrKey.push(twoArr[i3][0]);
@@ -159,9 +166,9 @@ $(function() {
             }
         }
         for (var arr in styleObj) {
-            var start = '.' + arr + ' .' + customConfig.linkNamePrefix;
+            var start = `.${arr} .${customConfig.linkNamePrefix}`;
             for (var i5 = 0; i5 < styleObj[arr].length; i5++) {
-                html += start + (i5 + 1) + "{" + styleObj[arr][i5] + "}<br>";
+                html += `${start}${i5 + 1}{${styleObj[arr][i5]}}<br>`;
             }
         }
         $('#styleData').html(html);
