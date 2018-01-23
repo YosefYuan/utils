@@ -33,7 +33,7 @@ var cssLink = `<link rel="stylesheet" type="text/css" href="landing/2018/${pageI
 var jsLink = `<script type="text/javascript" src="landing/2018/lib/${jsVersionName}?$staticlink$"></script>`
 
 // 图片链接
-var $pcimg1 = `<img class="ld" data-src="landing/2018/${pageId}/images/p_`,
+var $pcimg1 = `<img class="ld" data-src="landing/2018/${pageId}/images/p2_`,
 
     $pcimg2 = `.jpg${staticSuffix} alt="">`;
 
@@ -91,24 +91,24 @@ function generateHtml() {
     html += pcWraperPart2;
 
     // mb 部分
-    html += mbWraperPart1;    
-    for (var i = 0; i < mbPartJson.length; i++) {
-        var imgNum = i + 1;
-        if (imgNum < 10) {
-            imgNum = `0${imgNum}`
-        }
-        html += (mbPart1 + (i + 1) + mbPart2 + $mbimg1 + imgNum + $mbimg2);
-        for (var j = 0; j < mbPartJson[i].length; j++) {
-            var linkName = mbPartJson[i][j];
-            if (testProd(linkName)) {
-                html += $prodLink1 + linkName + $prodLink2 + (j + 1) + $prodLink3 + $prodBt1 + linkName + $prodBt2 + (j + 1) + $prodBt3;
-            } else {
-                html += $link1 + linkName + $link2 + (j + 1) + $link3;
-            }
-        }
-        html += mbPart3;
-    }
-    html += mbWraperPart2;
+    // html += mbWraperPart1;    
+    // for (var i = 0; i < mbPartJson.length; i++) {
+    //     var imgNum = i + 1;
+    //     if (imgNum < 10) {
+    //         imgNum = `0${imgNum}`
+    //     }
+    //     html += (mbPart1 + (i + 1) + mbPart2 + $mbimg1 + imgNum + $mbimg2);
+    //     for (var j = 0; j < mbPartJson[i].length; j++) {
+    //         var linkName = mbPartJson[i][j];
+    //         if (testProd(linkName)) {
+    //             html += $prodLink1 + linkName + $prodLink2 + (j + 1) + $prodLink3 + $prodBt1 + linkName + $prodBt2 + (j + 1) + $prodBt3;
+    //         } else {
+    //             html += $link1 + linkName + $link2 + (j + 1) + $link3;
+    //         }
+    //     }
+    //     html += mbPart3;
+    // }
+    // html += mbWraperPart2;
 
     // 汇总并显示
     html += jsLink;

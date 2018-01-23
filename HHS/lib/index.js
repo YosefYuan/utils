@@ -67,7 +67,8 @@ $(function() {
             "top": e.pageY+50
         });
         $("#showposi").show();
-
+        
+        // add ENTER shortcut
         $(document).keydown(function(e){
             if($("#showposi").is(":visible") && e.which === 13){
                 $('#pushPosiData').trigger("click");
