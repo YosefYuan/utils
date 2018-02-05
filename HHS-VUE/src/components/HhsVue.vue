@@ -1,13 +1,14 @@
 <template>
   <div id="pro">
-    <div v-if="partData.partJson" class="pro-block" :class="showClass('part',index)" :key="index"  v-for="(part,index) in partData.partJson">
+    <div id="showflag"></div>
+    <div v-if="partData.partJson" class="pro-block" :class="showClass('part',index)" :key="index" v-for="(part,index) in partData.partJson" :id="partData.idJson[index+1]">
       <img class="ld" :pc-src="imgSrc('p',index)" :mb-src="imgSrc('m',index)" alt="">
       <template v-for="(linkId,index2) in partData.partJson[index]">
-        <a v-if="testHref(/^#/, linkId)" :key="index2" :href="linkId" class="plink" :class="showClass('link',index2)"></a>
-        <a  v-if="testHref(/^\s*$/, linkId)" :key="index2" href="javascript:;" class="plink" :class="showClass('link',index2)"></a>
-        <template v-if="testHref(/^BIO/, linkId)">  
-          <a :key="showKey('link',index2)" :href="showProdHref(linkId)" class="plink" :class="showClass('link',index2)" target="_blank"></a>
-          <a :key="showKey('bt',index2)" :href="showProdHref(linkId)" class="plink js-button_shop_now" :class="showClass('bt',index2)"></a>
+        <a v-if="testHref(rules.toAnchor, linkId)" :key="index2" :href="linkId" class="plink" :class="showClass(linkPrefix.link,index2)"></a>
+        <a  v-if="testHref(rules.normalLink, linkId)" :key="index2" href="javascript:;" class="plink" :class="showClass(linkPrefix.link,index2)"></a>
+        <template v-if="testHref(rules.prodLink, linkId)">  
+          <a :key="showKey(linkPrefix.link,index2)" :href="showProdHref(linkId)" class="plink" :class="showClass(linkPrefix.link,index2)" target="_blank"></a>
+          <a :key="showKey(linkPrefix.btn,index2)" :href="showProdHref(linkId)" class="plink js-button_shop_now" :class="showClass(linkPrefix.btn,index2)"></a>
         </template>
       </template>
     </div>
@@ -20,19 +21,17 @@ export default {
   name: "HhsVue",
   data() {
     return {
-      partData: {
-        pageId: "",
-        partJson: []
+      linkPrefix: {
+        link: "link",
+        btn: "bt"
       },
-      showProd: false,
-      href: false,
-      jsHref: false
+      rules: {
+        toAnchor: /^#/,
+        normalLink: /^\s*$/,
+        prodLink: /^BIO|[A-Za-z0-9]{5,}/
+      },
+      partData: partData
     };
-  },
-  beforeCreate() {
-    this.$nextTick(() => {
-      this.partData = partData;
-    });
   },
   methods: {
     showClass(prefix, index) {

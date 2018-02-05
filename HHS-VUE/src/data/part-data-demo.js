@@ -23,7 +23,7 @@ export default {
     ["BIO00087"],
   ],
   "idJson": {
-    "1":"a",
+    "0":"a",
     "5":"b"
   }
 };
